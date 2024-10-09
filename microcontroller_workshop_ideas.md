@@ -1,4 +1,14 @@
 Ideas for 2025 microcontroller workshop
 ===
 
-Roll a die: https://www.amazon.com/dp/B0CLCXW74P/ref=sspa_mw_detail_0?ie=UTF8&psc=1&sp_csd=d2lkZ2V0TmFtZT1zcF9waG9uZV9kZXRhaWwp13NParams
+* Roll a die
+  - Uses a 7 segment display to show the die roll
+  - https://www.amazon.com/dp/B0CLCXW74P
+
+* Light up a row of LEDs
+  - Uses a rotary encoder to choose one of the states
+  - https://www.amazon.com/DaFuRui-10Pack-KY-040-Encoder-Arduino/dp/B0CTC767R9
+  - https://github.com/miketeachman/micropython-rotary
+
+* Wave a flag
+  - Uses a servo
