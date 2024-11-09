@@ -15,4 +15,4 @@ Ideas for 2025 microcontroller workshop
 
 * Blow out some candles
   - Uses s microphone and some LEDs that you can blow out if you blow hard enough or just dim if it's soft
-  - https://www.amazon.com/dp/B00FGV867M
+  - https://www.amazon.com/gp/product/B08N4FNFTR
