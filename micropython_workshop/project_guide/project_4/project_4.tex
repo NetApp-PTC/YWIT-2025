@@ -1,19 +1,18 @@
-\chapter{Project 4: Sensor}
+\chapter{Project 4: Candle}
 
 \section{Overview}
-Now that you have a handle on how to work with LEDs and buttons, let's look at something a little more complex.
-This project will introduce a humidity and temperature sensor. Over the course of this project, you will:
+Now that you have a handle on how to work with LEDs and buttons, let's look at another kind of component
+that you might use, a microphone. Over the course of this project, you will:
 \begin{itemize}
-    \item Connect a sensor board to your microcontroller
-    \item Import a library into your code that knows how to communicate with that sensor
-    \item Use MicroPython to poll the sensor over and over to write out the current result
-    \item Connect a screen to your microcontroller and output the sensor data to it
+    \item Connect a microphone board to your microcontroller
+    \item Use MicroPython to poll the microphone over and over and use its value to control the brightness of an LED
+    \item Connect a screen to your microcontroller and show some data on it
 \end{itemize}
 At the end of this project, your microcontroller should run a MicroPython program that prints out the current
 temperature and humidity of the room you're sitting in. Let's get started!
 \begin{figure}[H]
 \centering
-    \includegraphics[width=.6\linewidth]{project_4/screen_connected.jpg}
+    \includegraphics[width=.6\linewidth]{project_4/success!.jpg}
     \caption{The end result should look something like this}
 \end{figure}
 
@@ -23,7 +22,7 @@ temperature and humidity of the room you're sitting in. Let's get started!
 
 \subsection{Creating the circuit}
 Using jumper cables, you will be assembling a circuit between your microcontroller, your breadboard, and the small
-temperature/humidity board included in your kit.
+microphone board and OLED screen included in your kit.
 
 \subsubsection{Remove previous components}
 Before beginning, remove any components from prior chapters including LEDs, buttons, and wires. You may leave the
@@ -45,95 +44,55 @@ You may need to apply more pressure than expected to seat the microcontroller pr
     \caption{So far, so good!}
 \end{figure}
 
+\subsubsection{Connect the Display, Microphone, LED, and Resistor}
+\begin{itemize}
+    \item Place a red LED into the breadboard with the longer leg in \textbf{F20} and the shorter leg
+    in \textbf{F21}. Then place one leg of a resistor in \textbf{J21} and the other in the top
+    negative rail (the blue one).
+    \item Place the 3 pins of the microphone board into the breadboard holes labeled \textbf{A12}, \textbf{A13}, and \textbf{A14}.
+    \item Place the 4 pins of the OLED screen into the breadboard holes labeled \textbf{A26}, \textbf{A27}, \textbf{A28}, and \textbf{A29}.
+\end{itemize}
+
+It should now be looking like this:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.6\linewidth]{project_4/components_placed.jpg}
+    \caption{All components are now ready to be wired up.}
+\end{figure}
+
 \subsubsection{Connect the necessary jumper wires}
 \begin{itemize}
+    \item Place one end of a black jumper wire into hole \textbf{J2} of the breadboard and the other end into
+    the top negative rail (the blue one). This will provide a ground path for all of the components.
+    \item Place a purple jumper wire between \textbf{J5} and \textbf{J20}. This provides the signal for the LED.
     \item Place a red jumper wire into hole \textbf{J3} of the breadboard and the other end in
-    hole \textbf{D16} of the breadboard. This will provide \textbf{3.3} volts of power to the temperature/humidity sensor.
-    \item Place a black jumper wire into hole \textbf{J2} of the breadboard and the other
-    end in hole \textbf{D17} of the breadboard. This will provide the ground connection for the temperature/humidity sensor.
-    \item Place a white jumper wire into hole \textbf{B6} of the breadboard and the other
-    end in hole \textbf{D18} of the breadboard. This will provide a clock signal to the sensor board.
-    \item Plase a yellow jumper wire into hole \textbf{B5} of the breadboard and the other
-    end in hole \textbf{D19} of the breadboard. This will transmit data from the sensor back to the microcontroller.
+    hole \textbf{C12} of the breadboard. This will provide \textbf{3.3} volts of power to the microphone.
+    \item Place a black jumper wire into hole \textbf{C13} of the breadboard and the other end in the top negative rail.
+    \item Place a yellow jumper wire into \textbf{C14} of the breadboard and the other end in hole \textbf{B3}.
+    \item Place a red wire into \textbf{E12} and the other end into \textbf{D27} to provide power to the OLED.
+    \item Place a brown wire into \textbf{E13} and the other end into \textbf{D26} to provide ground to the OLED.
+    \item Place a white wire into \textbf{D28} and the other end into \textbf{B6} to provide a clock signal to the OLED.
+    \item Place a yellow wire into \textbf{D29} and the other end into \textbf{B5} to provide data to the OLED.
 \end{itemize}
 
 You should be left with something that looks like this:
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.6\linewidth]{project_4/sensor_board_wired.jpg}
-    \caption{There are 4 wires that will be connected between the microcontroller and the sensor board.}
-\end{figure}
-
-\subsubsection{Attach the temperature/humidity sensor to the breadboard}
-Plug the 4 pins of the sensor board into the breadboard just under where the 4 jumper wires are lined up. Make sure the pins
-of the board are lined up with the jumper wires and the board points away from them. It should look like this:
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=.6\linewidth]{project_4/sensor_board_connected.jpg}
-    \caption{Click the button highlighted in red.}
+    \includegraphics[width=.6\linewidth]{project_4/all_wired_up.jpg}
+    \caption{There power and ground wires are shared between the microphone and the OLED screen.}
 \end{figure}
 
 \subsection{Programming the microcontroller}
 Once all of the wiring is correct, connect the USB cable to the microcontroller and load the IDE to
 access it. Refer back to Chapter \ref{ide} for instructions.
 
-Click on the file named "project\_4a\_sensor.py". This will load the code in the editor for this section.
+Click on the file named "project\_4\_candle.py". This will load the code in the editor for this section.
 Read through the comments and the code to get a sense for how it works. Once you are ready, you can
 click the blue play button in the upper left of the window to start the script.
 
-While the script is running, the temperature and humidity values will be printed out to the IDE's terminal
-every 5 seconds. Stop the program by clicking the red stop button (where the blue play button used to be)
-before moving on to the next step.
-
-\subsection{Making it fancier}
-Having the temperature and humidity print out to the terminal is pretty cool (or pretty warm depending on where you are).
-But wouldn't it be better if we didn't have to be connected to a computer to see the values? We can give
-our device a screen and have it print the values out there as well.
-
-\subsubsection{Connect the necessary jumper wires}
-\begin{itemize}
-    \item First, disconnect the USB cable from your microcontroller. Doing this prevents accidentally connecting power to somewhere it shouln't go!
-    \item Place a red jumper wire into hole \textbf{E16} of the breadboard and the other end in
-    hole \textbf{E25} of the breadboard. This will provide \textbf{3.3} volts of power to the screen.
-    \item Place a black jumper wire into hole \textbf{E17} of the breadboard and the other end
-    in hole \textbf{E24} of the breadboard. This will provide the ground connection for the screen.
-    \item Place a white jumper wire into hole \textbf{E18} of the breadboard and the other end
-    in hole \textbf{E26} of the breadboard. This will provide a clock signal to the screen.
-    \item Place a yellow jumper wire into hole \textbf{B4} of the breadboard and the other
-    end in hole \textbf{E27} of the breadboard. This will transmit data from the microcontroller to the screen to be displayed.
-\end{itemize}
-
-You should be left with something that looks like this:
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=.6\linewidth]{project_4/screen_wired.jpg}
-    \caption{The first 3 wires are connected right behind the wires for the sensor. The last wire is connected to the microcontroller.}
-\end{figure}
-
-\begin{tcolorbox}[colback=yellow!10!white,colframe=yellow!50!black]
-    NOTE: The black and red jumper wires for the temperature sensor are in the reverse order as the
-    black and red wires for the screen. If you get them backwards, your microcontroller will not be able
-    to power on and it is possible to damage it if you leave it connected for too long.
-\end{tcolorbox}
-
-\subsubsection{Attach the screen to the breadboard}
-Plug the 4 pins of the screen into the breadboard just under where the 4 new jumper wires are lined up. Make sure the pins of
-the screen are lined up with the jumper wires and the screen points away from them. It should look like this:
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=.6\linewidth]{project_4/screen_connected.jpg}
-    \caption{Click the button highlighted in red.}
-\end{figure}
-
-Plug the USB cable back into the microcontroller and reconnect to it on the IDE interface. Click on the
-file named "project\_4b\_sensor.py". This will load the code in the editor for this section. Read through
-the comments and the code to get a sense for how it works. Once you are ready, you can click the blue play
-button in the upper left of the window to start the script.
-
-While the script is running, it will now print out the current temperature and humidity every 5 seconds
-to the IDE's terminal, as before, and it will also display these values to the OLED that we just connected.
+While the script is running, the LED will change brightness based on the sound level in the room. If
+you blow on the microphone, the LED should get dimmer. If you blow long and hard enough, the LED will
+go out. The OLED screen will show the current brightness level of the LED.
 
 \section{Review}
 This project demonstrates how you can connect external sensors to a microcontroller, read their status,
