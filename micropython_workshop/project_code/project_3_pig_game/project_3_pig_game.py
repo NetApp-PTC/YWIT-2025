@@ -4,18 +4,22 @@ import time
 from debounced_button import DebouncedButton
 from seven_segment import SevenSegmentDisplay
 
-WIN_LIMIT = 100
+WIN_LIMIT = 50
 CURRENT_PLAYER = 2
 SCORES = {1: 0, 2: 0}
 CURRENT_PLAYER_HELD = 0
+GAME_OVER = False
 
 def game_win():
+    global GAME_OVER
+
     roll_button.disable()
     next_player_button.disable()
     print("---")
     for player, score in SCORES.items():
         print(f"Player {player}: {score} points")
     print(f"Player {CURRENT_PLAYER} wins!")
+    GAME_OVER = True
 
 def roll(_):
     global CURRENT_PLAYER_HELD
@@ -60,6 +64,7 @@ def next_player(_):
     CURRENT_PLAYER = 1 if CURRENT_PLAYER == 2 else 2
     print("---")
     print(f"Player {CURRENT_PLAYER}'s turn - You have {SCORES[CURRENT_PLAYER]} points so far")
+    display.clear()
 
 
 display = SevenSegmentDisplay([10, 9, 8, 7, 6, 5, 4])
@@ -69,3 +74,5 @@ next_player_button = DebouncedButton(2, next_player)
 # start the game
 display.clear()
 next_player(None)
+while not GAME_OVER:
+    pass
