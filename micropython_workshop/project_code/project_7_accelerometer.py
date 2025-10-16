@@ -1,21 +1,30 @@
 from machine import Pin, SoftI2C
+import mpu6050
 import ssd1306
-import sys
 
 # Set up our OLED display
 i2c_oled = SoftI2C(scl=Pin(7), sda=Pin(6))
 screen_size = (128, 64)
 oled = ssd1306.SSD1306_I2C(*screen_size, i2c_oled)
 
+# Set up our accelerometer
+mpu = mpu6050.MPU6050(SoftI2C(scl=Pin(20), sda=Pin(8)))
+mpu.wake()
+
+
 class Ball:
+    """A class representing the moving ball on our game's table.
+    It will update itself in response to the accelerometer data changing.
+    """
+
     def __init__(self):
         # start in the middle of the screen
         self.x = screen_size[0] / 2
         self.y = screen_size[1] / 2
 
-    def update(self, data) -> bool:
-        self.x += data[0]
-        self.y += data[1]
+    def update(self, accel) -> bool:
+        self.x += accel[1]
+        self.y += accel[0]
 
         if self.x <= 0 or self.x >= screen_size[0]:
             return False
@@ -32,16 +41,15 @@ def end_game():
     oled.text("Game Over", 30, 30, 1)
     oled.show()
 
-
 def measure(objects):
     result = True
 
     # get the current data from the sensor
-    data = (1, 0)
+    accel = mpu.read_accel_data()
 
     # pass it to each object to update themselves with
     for obj in objects:
-        result &= obj.update(data)
+        result &= obj.update(accel)
 
     return result
 
