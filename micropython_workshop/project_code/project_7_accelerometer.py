@@ -1,3 +1,9 @@
+"""
+This project shows how you can use the input from an accelerometer to make an interactive game. The
+code below creates a simple game where a ball moves around the screen in response to tilting the
+device. If the ball hits the edge of the screen, the game ends.
+"""
+
 from machine import Pin, SoftI2C
 import mpu6050
 import ssd1306

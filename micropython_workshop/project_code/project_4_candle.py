@@ -1,5 +1,10 @@
+"""
+This project shows an example of reading the input from a microphone and using that to control the
+brightness of an LED to simulate a candle that dims when it senses loud sounds (like blowing on it)
+and recovers its brightness over time. If the candle is dimmed for too long, it will "go out".
+"""
+
 from machine import ADC, Pin, PWM, SoftI2C
-import time
 
 # Here we import another library that knows how to draw things on the
 # small screen that's included in the kit

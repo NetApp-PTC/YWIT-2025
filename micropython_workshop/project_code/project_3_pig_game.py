@@ -1,3 +1,10 @@
+"""
+This is an implementation of the Pig dice game for two players. Players will take turns rolling a die
+(the 7-segment display) by pressing the roll button. Each roll adds to their current turn score unless they roll a 1,
+which forfeits their turn score and passes the turn to the next player. Players can choose to hold their score by pressing
+the next player button, which adds their current turn score to their total score. The first player to reach or exceed 50 points wins the game.
+"""
+
 import random
 import time
 
