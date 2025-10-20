@@ -15,6 +15,8 @@ The items below were used in the 2025 version of the workshop.
 * 1 per 12 students - [accelerometer](https://www.amazon.com/dp/B0DSZHX4K6) - $30.73 ($2.56 per student)
 * 1 per 10 students - [microphone](https://www.amazon.com/dp/B08TTM371D) - $13.99 ($1.40 per student)
 * 1 per 8 students - [rotary encoder](https://www.amazon.com/dp/B07B68H6R8) - $12.49 ($1.56 per student)
+---
+$16.54 per student
 
 Depending on the student’s/our loaner computers, if they don’t have a usb-c port, we might want a few of these handy (but likely don’t need them per student): [adapters](https://www.amazon.com/Elebase-Upgraded-Connector-Chargers-Interface/dp/B07LF72431)
 
